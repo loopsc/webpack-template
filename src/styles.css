@@ -1,0 +1,317 @@
+:root {
+    --primary: #f4f4f9;
+    --secondary: #e1e5f2;
+    --cool-gray: #6c7a89;
+    --powder-blue: #7ea9e1;
+    --cadet-gray: #85b7bb;
+    --accent: #4b7bec;
+    --text-dark: #2c3e50;
+    --text-light: #ecf0f1;
+    --radius: 12px;
+    --shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--primary);
+    color: var(--text-dark);
+}
+
+.container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    background-color: var(--secondary);
+    box-shadow: var(--shadow);
+    gap: 20px;
+    min-width: 250px;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+button {
+    background-color: var(--accent);
+    border: none;
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    font-size: 1rem;
+    color: white;
+    font-weight: 500;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    cursor: pointer;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.projects-button {
+    background-color: var(--cool-gray);
+}
+
+.new-task-button {
+    align-self: flex-start;
+    position: absolute;
+    left: 2rem;
+    top: 1rem;
+}
+
+.edit-project-button {
+    align-self: flex-end;
+    position: absolute;
+    right: 2rem;
+    top: 1rem;
+}
+
+.new-project-button {
+    background-color: var(--accent);
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-top-left-radius: var(--radius);
+    border-bottom-left-radius: var(--radius);
+    overflow: hidden;
+}
+
+.content-header-bar {
+    background-color: var(--cadet-gray);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: var(--shadow);
+}
+
+.active-project-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.tasks-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    padding: 2rem;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.task-div {
+    background-color: white;
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    position: relative;
+}
+
+.priority-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 30px solid red;
+    border-right: 30px solid transparent;
+    z-index: 2;
+    border-top-left-radius: 8px;
+}
+
+
+.task-div:hover:not(.editing) {
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.task-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.task-buttons {
+    display: none;
+    justify-content: center;
+    margin-top: auto;
+    gap: 0.5rem;
+}
+
+.task-div:hover .task-buttons,
+.task-div.editing .task-buttons {
+    display: flex;
+}
+
+.task-buttons button {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    background-color: var(--cool-gray);
+}
+
+.task-buttons button:hover {
+    background-color: var(--accent);
+}
+
+.dialog {
+    background-color: white;
+    padding: 32px;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    min-width: 320px;
+    max-width: 420px;
+    width: 90%;
+    margin: 0;
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -46%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+}
+
+.form input,
+.form textarea,
+.form select {
+    border-radius: 8px;
+    border: 1px solid var(--cadet-gray);
+    padding: 12px;
+    font-size: 1rem;
+    width: 100%;
+    background-color: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form input:focus {
+    border-color: var(--powder-blue);
+    box-shadow: 0 0 4px var(--powder-blue);
+    outline: none;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.save-cancel-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.form-button {
+    flex: 1;
+    background-color: var(--accent);
+    color: white;
+    font-weight: bold;
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.form-button:hover {
+    background-color: #3b6bdc;
+}
+
+.form-button.delete {
+    background-color: #e74c3c;
+}
+
+.form-button.delete:hover {
+    background-color: #c0392b;
+}
+
+.delete-button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.task-div.completed {
+    background-color: #e3e3e3;
+    text-decoration: line-through;
+    opacity: 0.75;
+}
+
+.task-inputs {
+    display: block;
+    margin: 8px auto;
+    padding: 10px 14px;
+    width: 80%;
+    max-width: 280px;
+    font-size: 1rem;
+    border: 1px solid var(--cool-gray);
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.task-inputs:focus {
+    outline: none;
+    border-color: var(--powder-blue);
+    box-shadow: 0 0 6px var(--powder-blue);
+}
+
+.task-title,
+.task-desc {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
